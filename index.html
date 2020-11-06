@@ -30,21 +30,17 @@
         function startGame() {
             myGamePiece = new component(50, 80, "red", 399, 529, "car");
             myScore = new component("30px", "Consolas", "black", 580, 49, "text");
-            siedeLines.push(new component(30, 750, "white", 0, -50));
-            siedeLines.push(new component(30, 30, "red", 0, 30));
-            siedeLines.push(new component(30, 30, "red", 0, 100));
-            siedeLines.push(new component(30, 30, "red", 0, 200));
-            siedeLines.push(new component(30, 30, "red", 0, 300));
-            siedeLines.push(new component(30, 30, "red", 0, 400));
+            siedeLines.push(new component(30, 750, "white", 0, -90));
+            siedeLines.push(new component(30, 60, "red", 0, 10));
+            siedeLines.push(new component(30, 60, "red", 0, 120));
+            siedeLines.push(new component(30, 60, "red", 0, 240));
+            siedeLines.push(new component(30, 60, "red", 0, 360));
 
-            siedeLines.push(new component(30, 750, "white", 770, -50));
-            siedeLines.push(new component(30, 30, "red", 770, 100));
-            siedeLines.push(new component(30, 30, "red", 770, 200));
-            siedeLines.push(new component(30, 30, "red", 770, 300));
-            siedeLines.push(new component(30, 30, "red", 770, 400));
-            siedeLines.push(new component(30, 30, "red", 770, 600));
-            siedeLines.push(new component(30, 30, "red", 770, 630));
-            siedeLines.push(new component(30, 30, "red", 770, 30));
+            siedeLines.push(new component(30, 750, "white", 770, -90));
+            siedeLines.push(new component(30, 60, "red", 770, 10));
+            siedeLines.push(new component(30, 60, "red", 770, 120));
+            siedeLines.push(new component(30, 60, "red", 770, 240));
+            siedeLines.push(new component(30, 60, "red", 770, 360));
             middleLine.push(new componentBullet(20, 80, "white", 400, 0));
             middleLine.push(new componentBullet(20, 80, "white", 400, 200));
             middleLine.push(new componentBullet(20, 80, "white", 400, 400));
@@ -196,21 +192,42 @@
                     bonuses[i].y = 900;
                 }
             }
+            for (i = 0; i < bonuses.length; i += 1) {
+                        for(j = 0; j < myObstacles.length; j+= 1) {
+                            if (myObstacles[j].crashWith(bonuses[i])) {
+                                bonuses[i].y = 900;
+                            }
+                        }
+            }
+            for (i = 0; i < bonuses.length; i += 1) {
+                        for(j = 0; j < siedeLines.length; j+= 1) {
+                            if (siedeLines[j].crashWith(bonuses[i])) {
+                                bonuses[i].y = 900;
+                            }
+                        }
+            }
+            for (i = 0; i < myObstacles.length; i += 1) {
+                        for(j = 0; j < siedeLines.length; j+= 1) {
+                            if (siedeLines[j].crashWith(myObstacles[i])) {
+                                myObstacles[i].y = 900;
+                            }
+                        }
+            }
             myGameArea.clear();
             myGamePiece.speedX = 0;
             if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX = -5;}
             if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX = 5;}
             if (myGameArea.key && myGameArea.key == 38) {increaseSpeed();}
-            if (myGameArea.key && myGameArea.key == 40) {decreaseSpeed();}
+                    if (myGameArea.key && myGameArea.key == 40) {}
             myGameArea.frameNo += 1;
-            if (myGameArea.frameNo == 1 || everyinterval(150) && speed != 0) {
+            if (everyinterval(200) && speed != 0) {
                 x = myGameArea.canvas.width;
                 minWidth = 20;
                 maxWidth = 700;
                 height = Math.floor(Math.random() * (maxWidth - minWidth + 1) + minWidth);
                 myObstacles.push(new componentArc(20, 20, "green", height, 0));
             }
-            if (myGameArea.frameNo == 1 || everyinterval(250)&& speed != 0) {
+            if (everyinterval(350)&& speed != 0) {
                 maxWidth = 700;
                 height = Math.floor(Math.random() * (maxWidth - minWidth + 1) + minWidth);
                 bonuses.push(new component(20, 20, "green", height, 0));
@@ -218,35 +235,34 @@
             if (myGameArea.frameNo == 1 || everyinterval(60)&& speed != 0) {
                 middleLine.push(new componentBullet(20, 80, "white", 400, -250));
             }
-            if (myGameArea.frameNo == 1 || everyinterval(60)&& speed != 0) {
-                middleLine.push(new componentBullet(20, 80, "white", 400, -250));
-            }
             if (myGameArea.frameNo == 1 || everyinterval(20)&& speed != 0) {
-                siedeLines.push(new component(30, 150, "white", 0, -200));
-                siedeLines.push(new component(30, 30, "red", 0, -100));
+                siedeLines.push(new component(30, 60, "white", 0, -30));
+                siedeLines.push(new component(30, 60, "red", 0, -90));
 
-                siedeLines.push(new component(30, 150, "white", 770, -200));
-                siedeLines.push(new component(30, 30, "red", 770, -100));
+                siedeLines.push(new component(30, 60, "white", 770, -30));
+                siedeLines.push(new component(30, 60, "red", 770, -90));
             }
             for (i = 0; i < siedeLines.length; i += 1) {
-                siedeLines[i].y += speed / 6;
+                siedeLines[i].y += speed/7;
                 siedeLines[i].update();
-            }
-            for (i = 0; i < bonuses.length; i += 1) {
-                if (speed != 0)
-                    bonuses[i].y += 1;
-                bonuses[i].update();
             }
 
             for (i = 0; i < middleLine.length; i += 1) {
-                middleLine[i].y += speed / 6;
+                middleLine[i].y += speed / 7;
                 middleLine[i].update();
             }
+
             for (i = 0; i < myObstacles.length; i += 1) {
                 if (speed != 0) {
                     myObstacles[i].y += 1;
                 }
                 myObstacles[i].update();
+            }
+
+            for (i = 0; i < bonuses.length; i += 1) {
+                if (speed != 0)
+                    bonuses[i].y += 1;
+                bonuses[i].update();
             }
             myScore.text = "Bonusy: " + wynik;
             myScore.update();
@@ -265,6 +281,7 @@
         }
 
         function increaseSpeed() {
+            speed = 40;
             if (speed < 40) {
                 speed += 1;
             }
@@ -273,15 +290,8 @@
             }
         }
         function decreaseSpeed() {
-            if (speed <= 0) {
-                return;
-            }
-            if (speed <= 40) {
-                speed -= 1;
-            }
-            if (speed == 10) {
-                everyInterval = 50;
-            }
+                    if(speed > 0)
+                        speed -= 1;
         }
 
     </script>
