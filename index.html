@@ -30,6 +30,25 @@
         function startGame() {
             myGamePiece = new component(50, 80, "red", 399, 529, "car");
             myScore = new component("30px", "Consolas", "black", 580, 49, "text");
+            siedeLines.push(new component(30, 750, "white", 0, -50));
+            siedeLines.push(new component(30, 30, "red", 0, 30));
+            siedeLines.push(new component(30, 30, "red", 0, 100));
+            siedeLines.push(new component(30, 30, "red", 0, 200));
+            siedeLines.push(new component(30, 30, "red", 0, 300));
+            siedeLines.push(new component(30, 30, "red", 0, 400));
+
+            siedeLines.push(new component(30, 750, "white", 770, -50));
+            siedeLines.push(new component(30, 30, "red", 770, 100));
+            siedeLines.push(new component(30, 30, "red", 770, 200));
+            siedeLines.push(new component(30, 30, "red", 770, 300));
+            siedeLines.push(new component(30, 30, "red", 770, 400));
+            siedeLines.push(new component(30, 30, "red", 770, 600));
+            siedeLines.push(new component(30, 30, "red", 770, 630));
+            siedeLines.push(new component(30, 30, "red", 770, 30));
+            middleLine.push(new componentBullet(20, 80, "white", 400, 0));
+            middleLine.push(new componentBullet(20, 80, "white", 400, 200));
+            middleLine.push(new componentBullet(20, 80, "white", 400, 400));
+            middleLine.push(new componentBullet(20, 80, "white", 400, 600));
             myGameArea.start();
         }
 
@@ -218,16 +237,16 @@
                     bonuses[i].y += 1;
                 bonuses[i].update();
             }
+
+            for (i = 0; i < middleLine.length; i += 1) {
+                middleLine[i].y += speed / 6;
+                middleLine[i].update();
+            }
             for (i = 0; i < myObstacles.length; i += 1) {
                 if (speed != 0) {
                     myObstacles[i].y += 1;
                 }
                 myObstacles[i].update();
-            }
-
-            for (i = 0; i < middleLine.length; i += 1) {
-                middleLine[i].y += speed / 6;
-                middleLine[i].update();
             }
             myScore.text = "Bonusy: " + wynik;
             myScore.update();
