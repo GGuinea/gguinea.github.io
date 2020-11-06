@@ -232,8 +232,8 @@
                 height = Math.floor(Math.random() * (maxWidth - minWidth + 1) + minWidth);
                 bonuses.push(new component(20, 20, "green", height, 0));
             }
-            if (myGameArea.frameNo == 1 || everyinterval(60)&& speed != 0) {
-                middleLine.push(new componentBullet(20, 80, "white", 400, -250));
+            if (everyinterval(60)&& speed != 0) {
+                middleLine.push(new componentBullet(20, 80, "white", 400, -40));
             }
             if (myGameArea.frameNo == 1 || everyinterval(20)&& speed != 0) {
                 siedeLines.push(new component(30, 60, "white", 0, -30));
