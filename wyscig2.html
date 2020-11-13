@@ -24,12 +24,16 @@
         var shotBullets = [];
         var speed = 0;
         var everyInterval = 50;
+        var menu;
+        var left = 0;
+        var right = 0;
 
         var myScore;
+        var pos;
         var wynik = 0;
 
         function startGame() {
-            myGamePiece = new component(50, 80, "red", 399, 529, "car");
+            myGamePiece = new component(50, 80, "red", 399, 429, "car");
             myScore = new component("30px", "Consolas", "black", 580, 49, "text");
             siedeLines.push(new component(30, 750, "white", 0, -90));
             siedeLines.push(new component(30, 60, "red", 0, 10));
@@ -46,8 +50,25 @@
             middleLine.push(new componentBullet(20, 80, "white", 400, 200));
             middleLine.push(new componentBullet(20, 80, "white", 400, 400));
             middleLine.push(new componentBullet(20, 80, "white", 400, 600));
+            menu = new drawButtons();
             myGameArea.start();
         }
+            function getMousePosition(canvas, event) { 
+                let rect = canvas.getBoundingClientRect(); 
+                let x = event.clientX - rect.left; 
+                let y = event.clientY - rect.top; 
+            console.log("Coordinate x: " + x,  
+                        "Coordinate y: " + y); 
+                        if(x < 330) {
+                                    left = 1;
+                                } else if(x < 550) {
+                                    
+shotBullets.push(new componentBullet(3,5, "black",myGamePiece.x+10, myGamePiece.y));
+                                        } else {
+                                                    right=1;
+                                        }
+        } 
+
 
         var myGameArea = {
             canvas: document.createElement("canvas"),
@@ -145,6 +166,23 @@
             }
         }
 
+        function drawButtons(){
+                    this.update = function () {
+        ctx.font = "30px Arial";
+        ctx.fillStyle = 'black';
+        ctx.fillText("Lewo", 30, 550);
+        
+            ctx.font = "30px Arial";
+            ctx.fillStyle = 'black';
+            ctx.fillText("Strzal", 370, 550);
+
+        ctx.font = "30px Arial";
+        ctx.fillStyle = 'black';
+        ctx.fillText("Prawo", 685, 550);
+        
+
+                    }
+    }
         function componentArc(width, height, color, x, y) {
             this.width = width;
             this.height = height;
@@ -224,8 +262,10 @@
             }
             myGameArea.clear();
             myGamePiece.speedX = 0;
-            if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX = -5;}
-            if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX = 5;}
+            if (myGameArea.key && myGameArea.key == 37 || left == 1) {myGamePiece.speedX = -5;
+                    }
+            if (myGameArea.key && myGameArea.key == 39 || right == 1) {myGamePiece.speedX = 5;
+                    }
             if (myGameArea.key && myGameArea.key == 38) {increaseSpeed();}
             if (myGameArea.key && myGameArea.key == 40) {} 
             if (myGameArea.key && myGameArea.key == 32) {
@@ -280,12 +320,41 @@
                     bonuses[i].y += 1;
                 bonuses[i].update();
             }
+
+
             myScore.text = "Bonusy: " + wynik;
             myScore.update();
+            menu.update();
             myGamePiece.newPos();
             myGamePiece.update();
         }
 
+        myGameArea.canvas.addEventListener('mousedown', function(evt) {
+        var mouse= getMousePos(myGameArea.canvas, evt);
+                    if(mouse.x < 300) {
+                                left = 1;
+                            } else if (mouse.x < 600) {
+                            shotBullets.push(new componentBullet(3,5, "black",myGamePiece.x+10, myGamePiece.y));
+                                    } else {
+                                        right = 1;
+                                    }
+        }, false);
+        myGameArea.canvas.addEventListener('mouseup', function(evt) {
+        var mouse= getMousePos(myGameArea.canvas, evt);
+                    if(mouse.x < 300) {
+                                left = 0;
+                            } else if( mouse.x < 900) {
+                                right = 0;
+                            }
+        }, false);
+
+    function getMousePos(canvas, event) {
+        var rect = canvas.getBoundingClientRect();
+        return {
+            x: event.clientX - rect.left,
+            y: event.clientY - rect.top
+        };
+    }
         function everyinterval(n) {
             if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
             return false;
@@ -305,10 +374,19 @@
                 everyInterval = 20;
             }
         }
+
         function decreaseSpeed() {
                     if(speed > 0)
                         speed -= 1;
         }
+                function getMousePos(canvas, event) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+      x: event.clientX - rect.left,
+      y: event.clientY - rect.top
+    };
+}
+
 
     </script>
 </body>
