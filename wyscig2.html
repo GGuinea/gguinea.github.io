@@ -50,24 +50,9 @@
             middleLine.push(new componentBullet(20, 80, "white", 400, 200));
             middleLine.push(new componentBullet(20, 80, "white", 400, 400));
             middleLine.push(new componentBullet(20, 80, "white", 400, 600));
-            menu = new drawButtons();
+            menu = new controller();
             myGameArea.start();
         }
-            function getMousePosition(canvas, event) { 
-                let rect = canvas.getBoundingClientRect(); 
-                let x = event.clientX - rect.left; 
-                let y = event.clientY - rect.top; 
-            console.log("Coordinate x: " + x,  
-                        "Coordinate y: " + y); 
-                        if(x < 330) {
-                                    left = 1;
-                                } else if(x < 550) {
-                                    
-shotBullets.push(new componentBullet(3,5, "black",myGamePiece.x+10, myGamePiece.y));
-                                        } else {
-                                                    right=1;
-                                        }
-        } 
 
 
         var myGameArea = {
@@ -166,7 +151,7 @@ shotBullets.push(new componentBullet(3,5, "black",myGamePiece.x+10, myGamePiece.
             }
         }
 
-        function drawButtons(){
+        function controller(){
                     this.update = function () {
         ctx.font = "30px Arial";
         ctx.fillStyle = 'black';
@@ -379,13 +364,6 @@ shotBullets.push(new componentBullet(3,5, "black",myGamePiece.x+10, myGamePiece.
                     if(speed > 0)
                         speed -= 1;
         }
-                function getMousePos(canvas, event) {
-    var rect = canvas.getBoundingClientRect();
-    return {
-      x: event.clientX - rect.left,
-      y: event.clientY - rect.top
-    };
-}
 
 
     </script>
