@@ -12,7 +12,6 @@
 </head>
 
 <body onload="startGame()">
-    Zielone kwadraty to bonusy
     <script>
 
         var myGamePiece;
@@ -21,6 +20,8 @@
         var siedeLines = [];
         var bonuses = [];
         var wheels = [];
+        var bullets = [];
+        var shotBullets = [];
         var speed = 0;
         var everyInterval = 50;
 
@@ -199,6 +200,14 @@
                             }
                         }
             }
+            for (i = 0; i < shotBullets.length; i += 1) {
+                        for(j = 0; j < myObstacles.length; j+= 1) {
+                            if (myObstacles[j].crashWith(shotBullets[i])) {
+                                shotBullets[i].y = -900;
+                                myObstacles[j].y = 900;
+                            }
+                        }
+            }
             for (i = 0; i < bonuses.length; i += 1) {
                         for(j = 0; j < siedeLines.length; j+= 1) {
                             if (siedeLines[j].crashWith(bonuses[i])) {
@@ -218,7 +227,9 @@
             if (myGameArea.key && myGameArea.key == 37) {myGamePiece.speedX = -5;}
             if (myGameArea.key && myGameArea.key == 39) {myGamePiece.speedX = 5;}
             if (myGameArea.key && myGameArea.key == 38) {increaseSpeed();}
-                    if (myGameArea.key && myGameArea.key == 40) {}
+            if (myGameArea.key && myGameArea.key == 40) {} 
+            if (myGameArea.key && myGameArea.key == 32) {
+                shotBullets.push(new componentBullet(3,5, "black",myGamePiece.x+10, myGamePiece.y));}
             myGameArea.frameNo += 1;
             if (everyinterval(200) && speed != 0) {
                 x = myGameArea.canvas.width;
@@ -250,6 +261,11 @@
             for (i = 0; i < middleLine.length; i += 1) {
                 middleLine[i].y += speed / 7;
                 middleLine[i].update();
+            }
+
+            for (i = 0; i < shotBullets.length; i += 1) {
+                shotBullets[i].y -= speed / 7;
+                shotBullets[i].update();
             }
 
             for (i = 0; i < myObstacles.length; i += 1) {
