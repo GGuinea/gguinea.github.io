@@ -390,9 +390,21 @@ canvas {
                                         if(speed > 0)
                                             speed -= acceleration *0.05;
                                     }
+                        function increaseSpeed2() {
+                                        if(speed < maxSpeed) {
+                                                        speed += acceleration;
+                                                    }
+                                    }
+
+                        function decreaseSpeed2() {
+                                        if(speed > 0)
+                                            speed -= acceleration;
+                                    }
 
 
         </script>
+        <button onclick="increaseSpeed2()">przyspiesz</button>
+<button onclick="decreaseSpeed2()">zwolinij</button>
     </body>
 
 </html>
