@@ -71,10 +71,12 @@ canvas {
                                                         this.frameNo = 0;
                                                         this.interval = setInterval(updateGameArea, 10);
                                                         window.addEventListener('keydown', function (e) {
-                                                                        myGameArea.key = e.keyCode;
+                                                                        myGameArea.keys = (myGameArea.keys || []);
+                                                                        myGameArea.keys[e.keyCode] = (e.type == "keydown")
+                                                                        //myGameArea.key = e.keyCode;
                                                                     })
                                                         window.addEventListener('keyup', function (e) {
-                                                                        myGameArea.key = false;
+                                                                        myGameArea.keys[e.keyCode] = (e.type == "keydown")
                                                                     })
                                                     },
                                         clear: function () {
@@ -253,14 +255,15 @@ canvas {
                                                     }
                                         myGameArea.clear();
                                         myGamePiece.speedX = 0;
-                                        if (myGameArea.key && myGameArea.key == 37 || left == 1) {myGamePiece.speedX = -5;
+                                        if (myGameArea.keys && myGameArea.keys[37] || left == 1) {myGamePiece.speedX = -5;
                                                     }
-                                        if (myGameArea.key && myGameArea.key == 39 || right == 1) {myGamePiece.speedX = 5;
+                                        if (myGameArea.keys && myGameArea.keys[39] || right == 1) {myGamePiece.speedX = 5;
                                                     }
-                                        if (myGameArea.key && myGameArea.key == 38) {increaseSpeed();}
-                                        if (myGameArea.key && myGameArea.key == 40) {decreaseSpeed();} 
-                                        if (myGameArea.key && myGameArea.key == 32) {
-                                                        shotBullets.push(new componentBullet(3,5, "black",myGamePiece.x+10, myGamePiece.y));}
+                                        if (myGameArea.keys && myGameArea.keys[38]) {increaseSpeed();}
+                                        if (myGameArea.keys && myGameArea.keys[40]) {decreaseSpeed();} 
+                                        if (myGameArea.keys&& myGameArea.keys[32]) {
+                                                        shotBullets.push(new componentBullet(3,5, "black",myGamePiece.x+10, myGamePiece.y));
+                                                    }
                                         myGameArea.frameNo += 1;
                                         if (everyinterval(200) && speed != 0) {
                                                         x = myGameArea.canvas.width;
