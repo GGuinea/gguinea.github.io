@@ -36,7 +36,7 @@ canvas {
                         var maxSpeed = 20;
                         var acceleration = 1;
                         var flag = 0;
-                        var lastPosition;
+                        var shootDelay = 0;
                         function startGame() {
                                         myGamePiece = new component(50, 80, "red", 399, 429, "car");
                                         myScore = new component("30px", "Consolas", "black", 580, 49, "text");
@@ -262,7 +262,10 @@ canvas {
                                         if (myGameArea.keys && myGameArea.keys[38]) {increaseSpeed();}
                                         if (myGameArea.keys && myGameArea.keys[40]) {decreaseSpeed();} 
                                         if (myGameArea.keys&& myGameArea.keys[32]) {
-                                                        shotBullets.push(new componentBullet(3,5, "black",myGamePiece.x+10, myGamePiece.y));
+                                                        if(shootDelay <= 0) {
+                                                            shotBullets.push(new componentBullet(3,5, "black",myGamePiece.x+10, myGamePiece.y));
+                                                                        shootDelay = 10;
+                                                        }
                                                     }
                                         myGameArea.frameNo += 1;
                                         if (everyinterval(200) && speed != 0) {
@@ -322,6 +325,7 @@ canvas {
                                         myGamePiece.newPos();
                                         myGamePiece.update();
                                         metersCounter++;
+                                        shootDelay--;
                                     }
 
                         myGameArea.canvas.addEventListener('mousedown', function(evt) {
