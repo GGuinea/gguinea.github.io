@@ -17,7 +17,8 @@ canvas {
             var myGamePiece;
                         var myObstacles = [];
                         var middleLine = [];
-                        var siedeLines = [];
+                        var siedeLinesRed = [];
+                        var siedeLinesWhite = [];
                         var bonuses = [];
                         var wheels = [];
                         var bullets = [];
@@ -39,21 +40,17 @@ canvas {
                         function startGame() {
                                         myGamePiece = new component(50, 80, "red", 399, 429, "car");
                                         myScore = new component("30px", "Consolas", "black", 580, 49, "text");
-                                        siedeLines.push(new component(30, 750, "white", 0, -90));
-                                        siedeLines.push(new component(30, 60, "red", 0, 10));
-                                        siedeLines.push(new component(30, 60, "red", 0, 120));
-                                        siedeLines.push(new component(30, 60, "red", 0, 240));
-                                        siedeLines.push(new component(30, 60, "red", 0, 360));
+                                        siedeLinesWhite.push(new component(30, 750, "white", 0, -90));
+                                        siedeLinesRed.push(new component(30, 60, "red", 0, 10));
+                                        siedeLinesRed.push(new component(30, 60, "red", 0, 120));
+                                        siedeLinesRed.push(new component(30, 60, "red", 0, 240));
+                                        siedeLinesRed.push(new component(30, 60, "red", 0, 360));
 
-                                        siedeLines.push(new component(30, 750, "white", 770, -90));
-                                        siedeLines.push(new component(30, 60, "red", 770, 10));
-                                        siedeLines.push(new component(30, 60, "red", 770, 120));
-                                        siedeLines.push(new component(30, 60, "red", 770, 240));
-                                        siedeLines.push(new component(30, 60, "red", 770, 360));
-                                        middleLine.push(new componentBullet(20, 80, "white", 400, 0));
-                                        middleLine.push(new componentBullet(20, 80, "white", 400, 200));
-                                        middleLine.push(new componentBullet(20, 80, "white", 400, 400));
-                                        middleLine.push(new componentBullet(20, 80, "white", 400, 600));
+                                        siedeLinesWhite.push(new component(30, 750, "white", 770, -90));
+                                        siedeLinesRed.push(new component(30, 60, "red", 770, 10));
+                                        siedeLinesRed.push(new component(30, 60, "red", 770, 120));
+                                        siedeLinesRed.push(new component(30, 60, "red", 770, 240));
+                                        siedeLinesRed.push(new component(30, 60, "red", 770, 360));
                                         menu = new controller();
                                         myGameArea.start();
                                     }
@@ -236,15 +233,15 @@ canvas {
                                                                     }
                                                     }
                                         for (i = 0; i < bonuses.length; i += 1) {
-                                                        for(j = 0; j < siedeLines.length; j+= 1) {
-                                                                        if (siedeLines[j].crashWith(bonuses[i])) {
+                                                        for(j = 0; j < siedeLinesWhite.length; j+= 1) {
+                                                                        if (siedeLinesWhite[j].crashWith(bonuses[i])) {
                                                                                         bonuses[i].y = 900;
                                                                                     }
                                                                     }
                                                     }
                                         for (i = 0; i < myObstacles.length; i += 1) {
-                                                        for(j = 0; j < siedeLines.length; j+= 1) {
-                                                                        if (siedeLines[j].crashWith(myObstacles[i])) {
+                                                        for(j = 0; j < siedeLinesWhite.length; j+= 1) {
+                                                                        if (siedeLinesWhite[j].crashWith(myObstacles[i])) {
                                                                                         myObstacles[i].y = 900;
                                                                                     }
                                                                     }
@@ -276,19 +273,15 @@ canvas {
                                                         middleLine.push(new componentBullet(20, 80, "white", 400, -40));
                                                     }
                                         if (myGameArea.frameNo == 1 || everyintervalRed(20)&& speed != 0) {
-                                                        if(flag == 1) {
-                                                                        siedeLines.push(new component(30, 60, "red", 0, -90));
-                                                                        siedeLines.push(new component(30, 60, "red", 770, -90));
-                                                                        flag = 0;
-                                                                    } else {
-                                                                                    siedeLines.push(new component(30, 60, "white", 0, -30));
-                                                                                    siedeLines.push(new component(30, 60, "white", 770, -30));
-                                                                                    flag = 1;
-                                                                                }
+                                                                        siedeLinesRed.push(new component(30, 60, "red", 0, -90));
+                                                                        siedeLinesRed.push(new component(30, 60, "red", 770, -90));
                                                     }
-                                        for (i = 0; i < siedeLines.length; i += 1) {
-                                                        siedeLines[i].y += speed;
-                                                        siedeLines[i].update();
+                                        for (i = 0; i < siedeLinesWhite.length; i += 1) {
+                                                        siedeLinesWhite[i].update();
+                                                    }
+                                        for (i = 0; i < siedeLinesRed.length; i += 1) {
+                                                        siedeLinesRed[i].y += speed;
+                                                        siedeLinesRed[i].update();
                                                     }
 
                                         for (i = 0; i < middleLine.length; i += 1) {
@@ -297,7 +290,7 @@ canvas {
                                                     }
 
                                         for (i = 0; i < shotBullets.length; i += 1) {
-                                                        shotBullets[i].y -= speed / 4;
+                                                        shotBullets[i].y -= speed / 2;
                                                         shotBullets[i].update();
                                                     }
 
@@ -354,7 +347,7 @@ canvas {
                                         return false;
                                     }
                         function everyintervalRed(n) {
-                                        if (metersCounter % speed == 0) {return true;}
+                                        if ((metersCounter / 50) % 1 == 0) {return true;}
                                         return false;
                                     }
                         function everyinterval2(n) {
