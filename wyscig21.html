@@ -33,7 +33,7 @@ canvas {
                         var pos;
                         var wynik = 0;
                         var minSpeed = 1;
-                        var maxSpeed = 5;
+                        var maxSpeed = 20;
                         var acceleration = 1;
                         var flag = 0;
                         var lastPosition;
@@ -41,6 +41,8 @@ canvas {
                                         myGamePiece = new component(50, 80, "red", 399, 429, "car");
                                         myScore = new component("30px", "Consolas", "black", 580, 49, "text");
                                         siedeLinesWhite.push(new component(30, 750, "white", 0, -90));
+                                        siedeLinesRed.push(new component(30, 60, "red", -40, 0));
+                                        siedeLinesRed.push(new component(30, 60, "red", -40, 0));
                                         siedeLinesRed.push(new component(30, 60, "red", 0, 10));
                                         siedeLinesRed.push(new component(30, 60, "red", 0, 120));
                                         siedeLinesRed.push(new component(30, 60, "red", 0, 240));
@@ -51,6 +53,9 @@ canvas {
                                         siedeLinesRed.push(new component(30, 60, "red", 770, 120));
                                         siedeLinesRed.push(new component(30, 60, "red", 770, 240));
                                         siedeLinesRed.push(new component(30, 60, "red", 770, 360));
+                                        middleLine.push(new componentBullet(20, 80, "white", 400, 20));
+                                        middleLine.push(new componentBullet(20, 80, "white", 400, 140));
+                                        middleLine.push(new componentBullet(20, 80, "white", 400, 300));
                                         menu = new controller();
                                         myGameArea.start();
                                     }
@@ -272,7 +277,7 @@ canvas {
                                         if (everyinterval2(speed)&& speed != 0) {
                                                         middleLine.push(new componentBullet(20, 80, "white", 400, -40));
                                                     }
-                                        if (myGameArea.frameNo == 1 || everyintervalRed(20)&& speed != 0) {
+                                        if (everyintervalRed(20)&& speed != 0) {
                                                                         siedeLinesRed.push(new component(30, 60, "red", 0, -90));
                                                                         siedeLinesRed.push(new component(30, 60, "red", 770, -90));
                                                     }
@@ -290,7 +295,7 @@ canvas {
                                                     }
 
                                         for (i = 0; i < shotBullets.length; i += 1) {
-                                                        shotBullets[i].y -= speed / 2;
+                                                        shotBullets[i].y -= speed;
                                                         shotBullets[i].update();
                                                     }
 
@@ -347,11 +352,19 @@ canvas {
                                         return false;
                                     }
                         function everyintervalRed(n) {
-                                        if ((metersCounter / 50) % 1 == 0) {return true;}
+                                        if(siedeLinesRed[1].y > 150 ) {
+                                                        siedeLinesRed[1].y = 0;
+                                                        return true
+                                                        }
+                                        //if ((metersCounter / 50) % 1 == 0) {return true;}
                                         return false;
                                     }
                         function everyinterval2(n) {
-                                        if ((metersCounter / 100) % 1 == 0) {return true;}
+                                        if(siedeLinesRed[0].y > 300 ) {
+                                                        siedeLinesRed[0].y = 0;
+                                                        return true
+                                                        }
+                                        //if ((metersCounter / 100) % 1 == 0) {return true;}
                                         return false;
                                     }
 
