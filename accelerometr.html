@@ -70,6 +70,7 @@
                 document.body.insertBefore(this.canvas, document.body.childNodes[0]);
                 this.frameNo = 0;
                 this.interval = setInterval(updateGameArea, 10);
+                window.addEventListener('deviceorientation', handleOrientation);
                 window.addEventListener('keydown', function(e) {
                     myGameArea.keys = (myGameArea.keys || []);
                     myGameArea.keys[e.keyCode] = (e.type == "keydown")
@@ -86,6 +87,13 @@
                 clearInterval(this.interval);
             }
         }
+        function handleOrientation(event) {
+  var absolute = event.absolute;
+  var alpha    = event.alpha;
+  var beta     = event.beta;
+  var gamma    = event.gamma;
+wynik = alpha;
+}
 
         function component(width, height, color, x, y, type) {
             this.type = type;
@@ -221,7 +229,7 @@
             }
             for (i = 0; i < bonuses.length; i += 1) {
                 if (myGamePiece.crashWith(bonuses[i])) {
-                    wynik++;
+                    //wynik++;
                     bonuses[i].y = 900;
                 }
             }
@@ -354,14 +362,6 @@
             }
         }, false);
 
-        myGamePiece.canvas.addEventListener('deviceorientation', handleOrientation);
-        function handleOrientation(event) {
-  var absolute = event.absolute;
-  var alpha    = event.alpha;
-  var beta     = event.beta;
-  var gamma    = event.gamma;
-wynik = alpha;
-}
 
         function getMousePos(canvas, event) {
             var rect = canvas.getBoundingClientRect();
