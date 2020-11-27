@@ -36,6 +36,13 @@
         var acceleration = 1;
         var flag = 0;
         var shootDelay = 0;
+        let acl = new Accelerometer({frequency: 60});
+
+                acl.addEventListener('reading', () => {
+                    console.log("x:" + acl.x);
+                    console.log("y:" + acl.y);
+                    console.log("z:" + acl.z);
+                });
 
         function startGame() {
             myGamePiece = new component(50, 80, "red", 399, 429, "car");
@@ -58,6 +65,7 @@
             middleLine.push(new componentBullet(20, 80, "white", 400, 300));
             menu = new controller();
             myGameArea.start();
+            acl.start()
         }
 
 
