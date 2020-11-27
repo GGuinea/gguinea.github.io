@@ -13,6 +13,14 @@
 
 <body onload="startGame()">
     <script>
+        window.addEventListener('deviceorientation', handleOrientation);
+        function handleOrientation(event) {
+  var absolute = event.absolute;
+  var alpha    = event.alpha;
+  var beta     = event.beta;
+  var gamma    = event.gamma;
+wynik = beta;
+}
         var myGamePiece
         var myObstacles = [];
         var middleLine = [];
@@ -353,25 +361,6 @@
                 right = 0;
             }
         }, false);
-
-        myGameArea.canvas.addEventListener("deviceorientation", handleOrientation, true);
-
-                function handleOrientation(event) {
-                    var absolute = event.absolute;
-                    var alpha = event.alpha;
-                    var beta = event.beta;
-                    //wynik = beta;
-                    var gamma = event.gamma;
-                }
-
-        myGameArea.canvas.addEventListener("devicemotion", handleMotion, true);
-                function handleMotion(event) {
-                    var absolute = event.absolute;
-                    var alpha = event.alpha;
-                    var beta = event.acceleration.x;
-                    wynik = beta;
-                    var gamma = event.gamma;
-                }
 
         function getMousePos(canvas, event) {
             var rect = canvas.getBoundingClientRect();
