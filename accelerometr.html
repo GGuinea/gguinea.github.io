@@ -80,6 +80,7 @@
                 this.frameNo = 0;
                 this.interval = setInterval(updateGameArea, 10);
                 window.addEventListener('deviceorientation', handleOrientation);
+                window.addEventListener("devicemotion", handleMotion, true);
                 window.addEventListener('keydown', function(e) {
                     myGameArea.keys = (myGameArea.keys || []);
                     myGameArea.keys[e.keyCode] = (e.type == "keydown")
@@ -111,11 +112,15 @@
                                         left = 0;
                                         right = 0;
                                     }
+}
+                function handleMotion(event) {
+                    var absolute = event.acceleration.x;
+                    var alpha= event.acceleration.y;
+                    var beta= event.acceleration.z;
 wynik = absolute;
 wynik1 = alpha;
 wynik2 = beta;
-wynik3 = gamma;
-}
+                }
 
         function component(width, height, color, x, y, type) {
             this.type = type;
