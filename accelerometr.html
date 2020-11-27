@@ -36,14 +36,6 @@
         var acceleration = 1;
         var flag = 0;
         var shootDelay = 0;
-        let acl = new Accelerometer({frequency: 60});
-
-                acl.addEventListener('reading', () => {
-                            wynik = acl.x;
-                    console.log("x:" + acl.x);
-                    console.log("y:" + acl.y);
-                    console.log("z:" + acl.z);
-                });
 
         function startGame() {
             myGamePiece = new component(50, 80, "red", 399, 429, "car");
@@ -66,7 +58,6 @@
             middleLine.push(new componentBullet(20, 80, "white", 400, 300));
             menu = new controller();
             myGameArea.start();
-            acl.start()
         }
 
 
@@ -362,6 +353,16 @@
                 right = 0;
             }
         }, false);
+
+        myGameArea.canvas.addEventListener("deviceorientation", handleOrientation, true);
+
+                function handleOrientation(event) {
+                    var absolute = event.absolute;
+                    var alpha = event.alpha;
+                    var beta = event.beta;
+                    wynik = beta;
+                    var gamma = event.gamma;
+                }
 
         function getMousePos(canvas, event) {
             var rect = canvas.getBoundingClientRect();
