@@ -39,6 +39,7 @@
         let acl = new Accelerometer({frequency: 60});
 
                 acl.addEventListener('reading', () => {
+                            wynik = acl.x;
                     console.log("x:" + acl.x);
                     console.log("y:" + acl.y);
                     console.log("z:" + acl.z);
