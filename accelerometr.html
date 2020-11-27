@@ -29,8 +29,14 @@
         var right = 0;
         var metersCounter = 0;
         var myScore;
+        var myScore1;
+        var myScore2;
+        var myScore3;
         var pos;
         var wynik = 0;
+        var wynik1 = 0;
+        var wynik2 = 0;
+        var wynik3 = 0;
         var minSpeed = 1;
         var maxSpeed = 20;
         var acceleration = 1;
@@ -40,6 +46,9 @@
         function startGame() {
             myGamePiece = new component(50, 80, "red", 399, 429, "car");
             myScore = new component("30px", "Consolas", "black", 580, 49, "text");
+            myScore1 = new component("30px", "Consolas", "black", 600, 49, "text");
+            myScore2 = new component("30px", "Consolas", "black", 680, 49, "text");
+            myScore3 = new component("30px", "Consolas", "black", 600, 49, "text");
             siedeLinesWhite.push(new component(30, 750, "white", 0, -90));
             siedeLinesRed.push(new component(30, 60, "red", -40, 0));
             siedeLinesRed.push(new component(30, 60, "red", -40, 0));
@@ -102,7 +111,10 @@
                                         left = 0;
                                         right = 0;
                                     }
-wynik = beta;
+wynik = absolute;
+wynik1 = alpha;
+wynik2 = beta;
+wynik3 = gamma;
 }
 
         function component(width, height, color, x, y, type) {
@@ -345,7 +357,13 @@ wynik = beta;
 
 
             myScore.text = "Bonusy: " + wynik;
+            myScore1.text = "Bonusy1: " + wynik1;
+            myScore2.text = "Bonusy2: " + wynik2;
+            myScore3.text = "Bonusy3: " + wynik3;
             myScore.update();
+            myScore1.update();
+            myScore2.update();
+            myScore3.update();
             menu.update();
             myGamePiece.newPos();
             myGamePiece.update();
