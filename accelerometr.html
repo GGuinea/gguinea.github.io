@@ -360,6 +360,15 @@
                     var absolute = event.absolute;
                     var alpha = event.alpha;
                     var beta = event.beta;
+                    //wynik = beta;
+                    var gamma = event.gamma;
+                }
+
+        myGameArea.canvas.addEventListener("devicemotion", handleMotion, true);
+                function handleMotion(event) {
+                    var absolute = event.absolute;
+                    var alpha = event.alpha;
+                    var beta = event.acceleration.x;
                     wynik = beta;
                     var gamma = event.gamma;
                 }
