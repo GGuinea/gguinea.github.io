@@ -80,7 +80,6 @@
                 this.frameNo = 0;
                 this.interval = setInterval(updateGameArea, 10);
                 window.addEventListener('deviceorientation', handleOrientation);
-                window.addEventListener("devicemotion", handleMotion, true);
                 window.addEventListener('keydown', function(e) {
                     myGameArea.keys = (myGameArea.keys || []);
                     myGameArea.keys[e.keyCode] = (e.type == "keydown")
