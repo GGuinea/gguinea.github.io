@@ -74,15 +74,16 @@
                 this.frameNo = 0;
                 this.interval = setInterval(updateGameArea, 10);
                 if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-      DeviceOrientationEvent.requestPermission()
-        .then(permissionState => {
-          if (permissionState === 'granted') {
-            window.addEventListener('deviceorientation', handleOrientation);
-          }
-        })
-        .catch(console.error);
-    }
-                window.addEventListener('deviceorientation', handleOrientation);
+                    DeviceOrientationEvent.requestPermission().then(permissionState => {
+                    if (permissionState === 'granted') {
+                        window.addEventListener('deviceorientation', handleOrientation);
+                    }
+                })
+                    .catch(console.error);
+                        } else {
+                            alert ("Problem with device motion permission");
+                        }
+
                 window.addEventListener('keydown', function(e) {
                     myGameArea.keys = (myGameArea.keys || []);
                     myGameArea.keys[e.keyCode] = (e.type == "keydown")
