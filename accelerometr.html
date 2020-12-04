@@ -105,6 +105,7 @@
             })
             .catch( console.error )
             } else {
+                window.addEventListener("deviceorientation", handleOrientation, true);
             alert( "DeviceMotion is not defined" );
             }
         }
