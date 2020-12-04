@@ -75,6 +75,9 @@
                 document.body.insertBefore(this.canvas, document.body.childNodes[0]);
                 this.frameNo = 0;
                 this.interval = setInterval(updateGameArea, 10);
+                if ( location.protocol !== "https:" ) {
+                    location.href = "https:" + window.location.href.substring( window.location.protocol.length );
+                }
                 window.addEventListener('keydown', function(e) {
                     myGameArea.keys = (myGameArea.keys || []);
                     myGameArea.keys[e.keyCode] = (e.type == "keydown")
