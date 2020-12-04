@@ -46,24 +46,34 @@
         function startGame() {
             const btn = document.getElementById( "getPermission" );
             btn.addEventListener( "click", permission );
-            myGamePiece = new component(50, 80, "red", 399, 429, "car");
-            myScore = new component("30px", "Consolas", "black", 580, 49, "text");
-            siedeLinesWhite.push(new component(30, 750, "white", 0, -90));
+            myGamePiece = new component(50, 80, "red", 340, 629, "car");
+            myScore = new component("30px", "Consolas", "black", 380, 49, "text");
+            siedeLinesWhite.push(new component(30, 1750, "white", 0, -90));
             siedeLinesRed.push(new component(30, 60, "red", -40, 0));
             siedeLinesRed.push(new component(30, 60, "red", -40, 0));
             siedeLinesRed.push(new component(30, 60, "red", 0, 10));
             siedeLinesRed.push(new component(30, 60, "red", 0, 120));
             siedeLinesRed.push(new component(30, 60, "red", 0, 240));
             siedeLinesRed.push(new component(30, 60, "red", 0, 360));
+            siedeLinesRed.push(new component(30, 60, "red", 0, 460));
+            siedeLinesRed.push(new component(30, 60, "red", 0, 560));
+            siedeLinesRed.push(new component(30, 60, "red", 0, 660));
 
-            siedeLinesWhite.push(new component(30, 750, "white", 770, -90));
-            siedeLinesRed.push(new component(30, 60, "red", 770, 10));
-            siedeLinesRed.push(new component(30, 60, "red", 770, 120));
-            siedeLinesRed.push(new component(30, 60, "red", 770, 240));
-            siedeLinesRed.push(new component(30, 60, "red", 770, 360));
-            middleLine.push(new componentBullet(20, 80, "white", 400, 20));
-            middleLine.push(new componentBullet(20, 80, "white", 400, 140));
-            middleLine.push(new componentBullet(20, 80, "white", 400, 300));
+            siedeLinesWhite.push(new component(30, 1750, "white", 570, -90));
+            siedeLinesRed.push(new component(30, 60, "red", 570, 10));
+            siedeLinesRed.push(new component(30, 60, "red", 570, 120));
+            siedeLinesRed.push(new component(30, 60, "red", 570, 240));
+            siedeLinesRed.push(new component(30, 60, "red", 570, 360));
+            siedeLinesRed.push(new component(30, 60, "red", 570, 460));
+            siedeLinesRed.push(new component(30, 60, "red", 570, 560));
+            siedeLinesRed.push(new component(30, 60, "red", 570, 660));
+            middleLine.push(new componentBullet(20, 80, "white", 340, 20));
+            middleLine.push(new componentBullet(20, 80, "white", 340, 140));
+            middleLine.push(new componentBullet(20, 80, "white", 340, 260));
+            middleLine.push(new componentBullet(20, 80, "white", 340, 380));
+            middleLine.push(new componentBullet(20, 80, "white", 340, 500));
+            middleLine.push(new componentBullet(20, 80, "white", 340, 620));
+            middleLine.push(new componentBullet(20, 80, "white", 340, 740));
             menu = new controller();
             myGameArea.start();
         }
@@ -95,9 +105,9 @@
             }
         }
 
-        if ( location.protocol !== "https:" ) {
-                location.href = "https:" + window.location.href.substring( window.location.protocol.length );
-            }
+        //if ( location.protocol !== "https:" ) {
+        //        location.href = "https:" + window.location.href.substring( window.location.protocol.length );
+        //    }
 
         function permission () {
             if ( typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function" ) {
@@ -216,15 +226,15 @@
             this.update = function() {
                 ctx.font = "30px Arial";
                 ctx.fillStyle = 'black';
-                ctx.fillText("Lewo", 30, 550);
+                ctx.fillText("Lewo", 30, 750);
 
                 ctx.font = "30px Arial";
                 ctx.fillStyle = 'black';
-                ctx.fillText("Strzal", 370, 550);
+                ctx.fillText("Strzal", 300, 750);
 
                 ctx.font = "30px Arial";
                 ctx.fillStyle = 'black';
-                ctx.fillText("Prawo", 685, 550);
+                ctx.fillText("Prawo", 485, 750);
 
 
             }
@@ -331,7 +341,7 @@
             if (everyinterval(200) && speed != 0) {
                 x = myGameArea.canvas.width;
                 minWidth = 20;
-                maxWidth = 700;
+                maxWidth = 500;
                 height = Math.floor(Math.random() * (maxWidth - minWidth + 1) + minWidth);
                 myObstacles.push(new componentArc(20, 20, "green", height, 0));
             }
@@ -341,11 +351,11 @@
                 bonuses.push(new component(20, 20, "green", height, 0));
             }
             if (everyinterval2(speed) && speed != 0) {
-                middleLine.push(new componentBullet(20, 80, "white", 400, -40));
+                middleLine.push(new componentBullet(20, 80, "white", 340, -40));
             }
             if (everyintervalRed(20) && speed != 0) {
                 siedeLinesRed.push(new component(30, 60, "red", 0, -90));
-                siedeLinesRed.push(new component(30, 60, "red", 770, -90));
+                siedeLinesRed.push(new component(30, 60, "red", 570, -90));
             }
             for (i = 0; i < siedeLinesWhite.length; i += 1) {
                 siedeLinesWhite[i].update();
@@ -394,9 +404,9 @@
 
         myGameArea.canvas.addEventListener('mousedown', function(evt) {
             var mouse = getMousePos(myGameArea.canvas, evt);
-            if (mouse.x < 300) {
+            if (mouse.x < 250) {
                 left = 1;
-            } else if (mouse.x < 600) {
+            } else if (mouse.x < 500) {
                 shotBullets.push(new componentBullet(3, 5, "black", myGamePiece.x + 10, myGamePiece.y));
             } else {
                 right = 1;
@@ -404,9 +414,9 @@
         }, false);
         myGameArea.canvas.addEventListener('mouseup', function(evt) {
             var mouse = getMousePos(myGameArea.canvas, evt);
-            if (mouse.x < 300) {
+            if (mouse.x < 250) {
                 left = 0;
-            } else if (mouse.x < 900) {
+            } else if (mouse.x < 500) {
                 right = 0;
             }
         }, false);
