@@ -44,7 +44,7 @@
         var shootDelay = 0;
 
         function startGame() {
-            const btn = document.getElementById( "UPRAWNIENIA" );
+            const btn = document.getElementById( "getPermission" );
             btn.addEventListener( "click", permission );
             myGamePiece = new component(50, 80, "red", 399, 429, "car");
             myScore = new component("30px", "Consolas", "black", 580, 49, "text");
@@ -475,7 +475,7 @@
     <div style="text-align:center;width:880px;">
         <button onclick="increaseSpeed2()">Przyspiesz</button><br><br>
         <button onclick="decreaseSpeed2()">Zwolnij</button><br><br>
-        <button id="UPRAWNIENIA"> Get permission</button>
+        <button id="getPermission"> UPRAWNIENIA </button>
     </div>
 </body>
 
