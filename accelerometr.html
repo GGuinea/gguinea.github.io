@@ -46,7 +46,7 @@
         function startGame() {
             const btn = document.getElementById( "getPermission" );
             btn.addEventListener( "click", permission );
-            myGamePiece = new component(50, 80, "red", 340, 629, "car");
+            myGamePiece = new component(50, 80, "green", 340, 629, "car");
             myScore = new component("30px", "Consolas", "black", 380, 49, "text");
             siedeLinesWhite.push(new component(30, 1750, "white", 0, -90));
             siedeLinesRed.push(new component(30, 60, "red", -40, 0));
@@ -320,10 +320,14 @@
             myGameArea.clear();
             myGamePiece.speedX = 0;
             if (myGameArea.keys && myGameArea.keys[37] || left == 1) {
-                myGamePiece.speedX = -5;
+                        if(myGamePiece.x > 0) {
+                            myGamePiece.speedX = -5;
+                        }
             }
             if (myGameArea.keys && myGameArea.keys[39] || right == 1) {
-                myGamePiece.speedX = 5;
+                        if(myGamePiece.x < 560) {
+                            myGamePiece.speedX = 5;
+                        }
             }
             if (myGameArea.keys && myGameArea.keys[38]) {
                 increaseSpeed();
