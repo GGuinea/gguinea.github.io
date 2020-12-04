@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<head>
+<head>
+    <meta name="viewport" content="width=800" />
+    <style>
+        canvas {
+            border: 20px solid #d3d3d3;
+            background-color: #f1f1f1;
+        }
+        * {
+            touch-action: manipulation;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas">
+</canvas>
+<script>
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    canvas.width = 600;
+    canvas.height = 800;
+
+    function drawBall() {
+        ctx.beginPath();
+        ctx.arc(300, 300, 7, 0, 2 * Math.PI);
+        ctx.fillStyle = 'black';
+        ctx.fill();
+        ctx.closePath();
+    }
+    function drawPaddle() {
+        ctx.beginPath();
+        ctx.rect(300, 700, 80, 6);
+        ctx.fillStyle = 'green';
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawPaddle();
+        drawBall();
+    }
+
+    function loop() {
+        draw();
+        window.requestAnimationFrame(loop);
+    }
+loop();
+
+</script>
+</body>
+</html>
