@@ -75,9 +75,6 @@
                 document.body.insertBefore(this.canvas, document.body.childNodes[0]);
                 this.frameNo = 0;
                 this.interval = setInterval(updateGameArea, 10);
-                if ( location.protocol !== "https:" ) {
-                    location.href = "https:" + window.location.href.substring( window.location.protocol.length );
-                }
                 window.addEventListener('keydown', function(e) {
                     myGameArea.keys = (myGameArea.keys || []);
                     myGameArea.keys[e.keyCode] = (e.type == "keydown")
@@ -95,6 +92,9 @@
             }
         }
 
+        if ( location.protocol !== "https:" ) {
+                location.href = "https:" + window.location.href.substring( window.location.protocol.length );
+            }
         function permission () {
             if ( typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function" ) {
                 DeviceMotionEvent.requestPermission()
@@ -106,7 +106,6 @@
             .catch( console.error )
             } else {
                 window.addEventListener("deviceorientation", handleOrientation, true);
-            alert( "DeviceMotion is not defined" );
             }
         }
 
@@ -358,7 +357,11 @@
             }
 
             for (i = 0; i < shotBullets.length; i += 1) {
+                        if(speed == 0) {
+                            shotBullets[i].y -= 1;
+                                } else {
                 shotBullets[i].y -= speed;
+                                }
                 shotBullets[i].update();
             }
 
@@ -467,7 +470,7 @@
     </script>
     <div style="text-align:center;width:880px;">
         <button onclick="increaseSpeed2()">Przyspiesz</button><br><br>
-        <button onclick="decreaseSpeed2()">Zwolnij</button>
+        <button onclick="decreaseSpeed2()">Zwolnij</button><br><br>
         <button id="getPermission"> Get permission</button>
     </div>
 </body>
