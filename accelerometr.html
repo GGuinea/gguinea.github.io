@@ -96,7 +96,7 @@
         }
 
         function permission () {
-            if ( typeof( DeviceOrientationEvent ) !== "undefined" && typeof( DeviceOrientationEvent.requestPermission ) === "function" ) {
+            if ( typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function" ) {
                 DeviceMotionEvent.requestPermission()
                     .then( response => {
                     if ( response == "granted" ) {
@@ -105,7 +105,7 @@
             })
             .catch( console.error )
             } else {
-            alert( "DeviceOrientationEvent is not defined" );
+            alert( "DeviceMotion is not defined" );
             }
         }
 
