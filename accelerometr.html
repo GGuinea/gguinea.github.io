@@ -41,6 +41,8 @@
         var shootDelay = 0;
 
         function startGame() {
+            const btn = document.getElementById( "getPermission" );
+            btn.addEventListener( "click", permission );
             myGamePiece = new component(50, 80, "red", 399, 429, "car");
             myScore = new component("30px", "Consolas", "black", 580, 49, "text");
             siedeLinesWhite.push(new component(30, 750, "white", 0, -90));
@@ -73,9 +75,9 @@
                 document.body.insertBefore(this.canvas, document.body.childNodes[0]);
                 this.frameNo = 0;
                 this.interval = setInterval(updateGameArea, 10);
-                if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+                if (typeof(DeviceOrientationEvent) !== "undefined" && typeof  DeviceOrientationEvent.requestPermission === "function") {
                     DeviceOrientationEvent.requestPermission().then(permissionState => {
-                    if (permissionState === 'granted') {
+                    if (permissionState === "granted") {
                         window.addEventListener('deviceorientation', handleOrientation);
                     }
                 })
@@ -100,6 +102,22 @@
                 clearInterval(this.interval);
             }
         }
+
+        function permission () {
+            if ( typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function" ) {
+                DeviceMotionEvent.requestPermission()
+                    .then( response => {
+                    if ( response == "granted" ) {
+                        window.addEventListener( "devicemotion", (e) => {
+                    })
+                }
+            })
+            .catch( console.error )
+            } else {
+            alert( "DeviceMotionEvent is not defined" );
+            }
+        }
+
 
         function handleOrientation(event) {
             var x = event.beta;
@@ -458,6 +476,7 @@
     <div style="text-align:center;width:880px;">
         <button onclick="increaseSpeed2()">Przyspiesz</button><br><br>
         <button onclick="decreaseSpeed2()">Zwolnij</button>
+        <button id="getPermission"> Get permission</button>
     </div>
 </body>
 
