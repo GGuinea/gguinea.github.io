@@ -75,17 +75,6 @@
                 document.body.insertBefore(this.canvas, document.body.childNodes[0]);
                 this.frameNo = 0;
                 this.interval = setInterval(updateGameArea, 10);
-                if (typeof(DeviceOrientationEvent) !== "undefined" && typeof  DeviceOrientationEvent.requestPermission === "function") {
-                    DeviceOrientationEvent.requestPermission().then(permissionState => {
-                    if (permissionState === "granted") {
-                        window.addEventListener('deviceorientation', handleOrientation);
-                    }
-                })
-                    .catch(console.error);
-                        } else {
-                            alert ("Problem with device motion permission");
-                        }
-
                 window.addEventListener('keydown', function(e) {
                     myGameArea.keys = (myGameArea.keys || []);
                     myGameArea.keys[e.keyCode] = (e.type == "keydown")
@@ -104,17 +93,17 @@
         }
 
         function permission () {
-            if ( typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function" ) {
+            if ( typeof( DeviceOrientationEvent ) !== "undefined" && typeof( DeviceOrientationEvent.requestPermission ) === "function" ) {
                 DeviceMotionEvent.requestPermission()
                     .then( response => {
                     if ( response == "granted" ) {
-                        window.addEventListener( "devicemotion", (e) => {
+                        window.addEventListener( "deviceorientation", (e) => {
                     })
                 }
             })
             .catch( console.error )
             } else {
-            alert( "DeviceMotionEvent is not defined" );
+            alert( "DeviceOrientationEvent is not defined" );
             }
         }
 
