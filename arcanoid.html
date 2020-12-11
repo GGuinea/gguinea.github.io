@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, user-scalable=no, maximum-scale=0.9, minimum-scale=0.9" />
     <style>
         * {
             touch-action: manipulation;
@@ -29,10 +29,8 @@
       }
  
     function resizeGame() {
-    var widthToHeight = 4 / 3;
     var newWidth = window.innerWidth;
     var newHeight = window.innerHeight;
-    var newWidthToHeight = newWidth / newHeight;
     
     var gameCanvas = document.getElementById('mycanvas');
     gameCanvas.width = newWidth;
@@ -48,7 +46,7 @@
     }
     function drawPaddle() {
         ctx.beginPath();
-        ctx.rect(canvas.width/2, canvas.width/2, 80, 6);
+        ctx.rect(canvas.width/2, canvas.height/2, 80, 6);
         ctx.fillStyle = 'green';
         ctx.fill();
         ctx.closePath();
