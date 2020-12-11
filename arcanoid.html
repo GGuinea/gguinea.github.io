@@ -18,9 +18,9 @@
     var canvasWidth;
     var ctx;
     var bricks = {}; 
-    var rowCount = 5;
+    var rowCount = 3;
     var colCount =10;
-    var blockHeight = 20;
+    var blockHeight = 15;
     var blockWidth; 
     var blockPadding = 3;
       function init() {
@@ -51,14 +51,14 @@
  
     function drawBall() {
         ctx.beginPath();
-        ctx.arc(canvas.width/2, canvas.height/3, 7, 0, 2 * Math.PI);
+        ctx.arc(canvas.width/2, (canvas.height-canvas.height/4)-10, 7, 0, 2 * Math.PI);
         ctx.fillStyle = 'black';
         ctx.fill();
         ctx.closePath();
     }
     function drawPaddle() {
         ctx.beginPath();
-        ctx.rect(canvas.width/2, canvas.height - canvas.height/4, 80, 6);
+        ctx.rect((canvas.width/2)-40, canvas.height - canvas.height/4, 80, 6);
         ctx.fillStyle = 'green';
         ctx.fill();
         ctx.closePath();
