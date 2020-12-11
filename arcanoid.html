@@ -17,14 +17,26 @@
     var canvas;
     var canvasWidth;
     var ctx;
- 
+    var bricks = {}; 
+    var rowCount = 5;
+    var colCount =10;
+    var blockHeight = 20;
+    var blockWidth; 
+    var blockPadding = 3;
       function init() {
         canvas = document.getElementById('mycanvas');
+    for (c = 0; c < colCount; c++) {
+        bricks[c] = {};
+        for (r = 0; r < rowCount; r++) {
+            bricks[c][r] = { x: 0, y: 0, status: 1 };
+        }
+    }
         if (canvas.getContext) {
           ctx = canvas.getContext("2d");
           window.addEventListener('resize', resizeGame, false);
           window.addEventListener('orientationchange', resizeGame, false);
           resizeGame()
+            blockWidth= (canvas.width/colCount)-5;
         }
       }
  
@@ -46,16 +58,35 @@
     }
     function drawPaddle() {
         ctx.beginPath();
-        ctx.rect(canvas.width/2, canvas.height - canvas.height/3, 80, 6);
+        ctx.rect(canvas.width/2, canvas.height - canvas.height/4, 80, 6);
         ctx.fillStyle = 'green';
         ctx.fill();
         ctx.closePath();
+    }
+
+    function drawBricks() {
+        for (c = 0; c < colCount; c++) {
+            for (r = 0; r < rowCount; r++) {
+                if (bricks[c][r].status == 1) {
+                    var brickX = (c * (blockWidth+ blockPadding)) + 10;
+                    var brickY = (r * (blockHeight+ blockPadding)) + 10;
+                    bricks[c][r].x = brickX;
+                    bricks[c][r].y = brickY;
+                    ctx.beginPath();
+                    ctx.rect(brickX, brickY, blockWidth, blockHeight);
+                    ctx.fillStyle = 'black';
+                    ctx.fill();
+                    ctx.closePath();
+                }
+            }
+        }
     }
 
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawPaddle();
         drawBall();
+        drawBricks()
     }
 
     function loop() {
