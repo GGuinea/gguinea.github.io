@@ -18,11 +18,22 @@
     var canvasWidth;
     var ctx;
     var bricks = {}; 
+    var keys = {};
     var rowCount = 3;
     var colCount =10;
     var blockHeight = 15;
     var blockWidth; 
     var blockPadding = 3;
+    var paddleX;
+    var paddleY;
+    var paddleSpeed = 5;
+    var paddleWidth;
+    var ballX;
+    var ballY;
+    var verticalSpeed;
+    var horizontalSpeed;
+    var radius;
+
       function init() {
         canvas = document.getElementById('mycanvas');
     for (c = 0; c < colCount; c++) {
@@ -31,12 +42,28 @@
             bricks[c][r] = { x: 0, y: 0, status: 1 };
         }
     }
+    window.addEventListener('keydown', function(e) {
+        keys[e.keyCode] = true;
+        e.preventDefault();
+    });
+    window.addEventListener('keyup', function(e) {
+        delete keys[e.keyCode];
+    });
+
         if (canvas.getContext) {
           ctx = canvas.getContext("2d");
           window.addEventListener('resize', resizeGame, false);
           window.addEventListener('orientationchange', resizeGame, false);
           resizeGame()
-            blockWidth= (canvas.width/colCount)-5;
+        paddleX = (canvas.width/2)-40
+        paddleY = (canvas.height - canvas.height/4)
+        paddleWidth = 80;
+        ballX = canvas.width/2;
+        ballY = (canvas.height - canvas.height/4) - 10;
+        horizontalSpeed = 2;
+        verticalSpeed = horizontalSpeed * -1;
+        radius = 7;
+        blockWidth= (canvas.width/colCount)-5;
         }
       }
  
@@ -51,14 +78,15 @@
  
     function drawBall() {
         ctx.beginPath();
-        ctx.arc(canvas.width/2, (canvas.height-canvas.height/4)-10, 7, 0, 2 * Math.PI);
+
+        ctx.arc(ballX, ballY, radius, 0, 2 * Math.PI);
         ctx.fillStyle = 'black';
         ctx.fill();
         ctx.closePath();
     }
     function drawPaddle() {
         ctx.beginPath();
-        ctx.rect((canvas.width/2)-40, canvas.height - canvas.height/4, 80, 6);
+        ctx.rect(paddleX, paddleY, paddleWidth, 6);
         ctx.fillStyle = 'green';
         ctx.fill();
         ctx.closePath();
@@ -87,13 +115,37 @@
         drawPaddle();
         drawBall();
         drawBricks()
+    if (ballX + horizontalSpeed > canvas.width - radius|| ballX + horizontalSpeed < radius) {
+        horizontalSpeed = -horizontalSpeed;
+    }
+    if (ballY + verticalSpeed< radius) {
+        verticalSpeed = -verticalSpeed;
+    } else if (ballY + verticalSpeed > paddleX && ballX - radius < paddleX + paddleWidth) {
+                    if(ballY <= ballY - 6 ) {
+                        console.log(ballY, ballY-6);
+                        horizontalSpeed = horizontalSpeed + ((paddleX + paddleWidth/2)-ballX) * 0.005;
+                        verticalSpeed = -verticalSpeed;
+                    }
+            }
+        if (37 in keys) {
+            if (paddleX - paddleSpeed> 0) {
+                paddleX -= paddleSpeed;
+            }
+        } else if (39 in keys) {
+            if (paddleX+ paddleWidth+ paddleSpeed< canvas.width) {
+                paddleX+= paddleSpeed;
+            }
+            } 
+    ballX += horizontalSpeed;
+    ballY += verticalSpeed;
     }
 
     function loop() {
-            init()
         draw();
         window.requestAnimationFrame(loop);
     }
+
+init();
 loop();
 
 </script>
