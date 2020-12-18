@@ -26,7 +26,7 @@
     var blockPadding = 3;
     var paddleX;
     var paddleY;
-    var paddleSpeed = 5;
+    var paddleSpeed = 7;
     var paddleWidth;
     var ballX;
     var ballY;
@@ -36,12 +36,12 @@
 
       function init() {
         canvas = document.getElementById('mycanvas');
-    for (c = 0; c < colCount; c++) {
-        bricks[c] = {};
-        for (r = 0; r < rowCount; r++) {
-            bricks[c][r] = { x: 0, y: 0, status: 1 };
+        for (c = 0; c < colCount; c++) {
+            bricks[c] = {};
+            for (r = 0; r < rowCount; r++) {
+                bricks[c][r] = { x: 0, y: 0, status: 1 };
+            }
         }
-    }
     window.addEventListener('keydown', function(e) {
         keys[e.keyCode] = true;
         e.preventDefault();
@@ -63,6 +63,7 @@
         horizontalSpeed = 2;
         verticalSpeed = horizontalSpeed * -1;
         radius = 7;
+        console.log("fasdfsadf");
         blockWidth= (canvas.width/colCount)-5;
         }
       }
@@ -110,23 +111,43 @@
         }
     }
 
+    function collisionDetection() {
+            for(i = 0; i < colCount; i++) {
+                    for(j = 0; j < rowCount; j++) {
+                        var brick = bricks[i][j];
+                            if(brick.status == 1) {
+                                    if (ballX > brick.x && ballX < brick.x + brick.width && ballY > brick.y < brick.y + brick.height) {
+                                        verticalSpeed = -verticalSpeed;
+                                            brick.status = 0;
+                                            console.log("dziazla");
+                                    }
+                            }
+                    }
+            }
+    }
+
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBricks();
         drawPaddle();
         drawBall();
-        drawBricks()
+        collisionDetection()
     if (ballX + horizontalSpeed > canvas.width - radius|| ballX + horizontalSpeed < radius) {
         horizontalSpeed = -horizontalSpeed;
     }
     if (ballY + verticalSpeed< radius) {
         verticalSpeed = -verticalSpeed;
-    } else if (ballY + verticalSpeed > paddleX && ballX - radius < paddleX + paddleWidth) {
-                    if(ballY <= ballY - 6 ) {
-                        console.log(ballY, ballY-6);
-                        horizontalSpeed = horizontalSpeed + ((paddleX + paddleWidth/2)-ballX) * 0.005;
+    } else if (ballY + verticalSpeed > paddleY - radius) {
+            if(ballX + radius > paddleX && ballX - radius < paddleX + paddleWidth) {
+                    if(ballY = ballY - 6 ) {
+                        horizontalSpeed = horizontalSpeed + ((paddleX + paddleWidth/2)-ballX) * 0.05;
                         verticalSpeed = -verticalSpeed;
                     }
-            }
+
+                } else {
+                        document.location.reload();
+                }
+        }
         if (37 in keys) {
             if (paddleX - paddleSpeed> 0) {
                 paddleX -= paddleSpeed;
@@ -135,7 +156,7 @@
             if (paddleX+ paddleWidth+ paddleSpeed< canvas.width) {
                 paddleX+= paddleSpeed;
             }
-            } 
+        } 
     ballX += horizontalSpeed;
     ballY += verticalSpeed;
     }
