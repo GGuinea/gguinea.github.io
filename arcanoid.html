@@ -116,7 +116,7 @@
                     for(j = 0; j < rowCount; j++) {
                         var brick = bricks[i][j];
                             if(brick.status == 1) {
-                                    if (ballX > brick.x && ballX < brick.x + blockWidth && ballY > brick.y < brick.y + blockHeight) {
+                                    if (ballX > brick.x && ballX < brick.x + blockWidth && ballY > brick.y && ballY < brick.y + blockHeight) {
                                         verticalSpeed = -verticalSpeed;
                                             brick.status = 0;
                                             console.log("dziazla");
