@@ -103,7 +103,7 @@
                     bricks[c][r].y = brickY;
                     ctx.beginPath();
                     ctx.rect(brickX, brickY, blockWidth, blockHeight);
-                    ctx.fillStyle = 'black';
+                    ctx.fillStyle = 'green';
                     ctx.fill();
                     ctx.closePath();
                 }
@@ -116,11 +116,12 @@
                     for(j = 0; j < rowCount; j++) {
                         var brick = bricks[i][j];
                             if(brick.status == 1) {
-                                    if (ballX > brick.x && ballX < brick.x + brick.width && ballY > brick.y < brick.y + brick.height) {
+                                    if (ballX > brick.x && ballX < brick.x + blockWidth && ballY > brick.y < brick.y + blockHeight) {
                                         verticalSpeed = -verticalSpeed;
                                             brick.status = 0;
                                             console.log("dziazla");
-                                    }
+                                        } else {
+                                        }
                             }
                     }
             }
