@@ -33,9 +33,34 @@
     var verticalSpeed;
     var horizontalSpeed;
     var radius;
+    var left = 0
+    var right = 1
 
       function init() {
-        canvas = document.getElementById('mycanvas');
+        canvas = document.getElementById('mycanvas'); 
+              if(confirm("Nadaj uprawnienia")) {
+                    permission();
+                  } else {
+                    permission();
+                  }
+        //if ( location.protocol !== "https:" ) {
+        //        location.href = "https:" + window.location.href.substring( window.location.protocol.length );
+        //    }
+
+        function permission () {
+            if ( typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function" ) {
+                DeviceMotionEvent.requestPermission()
+                    .then( response => {
+                    if ( response == "granted" ) {
+                            window.addEventListener("deviceorientation", handleOrientation, true);
+                }
+            })
+            .catch( console.error )
+            } else {
+                window.addEventListener("deviceorientation", handleOrientation, true);
+            }
+        }
+
         for (c = 0; c < colCount; c++) {
             bricks[c] = {};
             for (r = 0; r < rowCount; r++) {
@@ -149,11 +174,11 @@
                         document.location.reload();
                 }
         }
-        if (37 in keys) {
+        if (37 in keys || left == 1) {
             if (paddleX - paddleSpeed> 0) {
                 paddleX -= paddleSpeed;
             }
-        } else if (39 in keys) {
+        } else if (39 in keys || right == 1) {
             if (paddleX+ paddleWidth+ paddleSpeed< canvas.width) {
                 paddleX+= paddleSpeed;
             }
@@ -161,6 +186,26 @@
     ballX += horizontalSpeed;
     ballY += verticalSpeed;
     }
+        function handleOrientation(event) {
+            var x = event.beta;
+            var y = event.gamma;
+            if (x > 90) {
+                x = 90
+            };
+            if (x < -90) {
+                x = -90
+            };
+            if (y < -5) {
+                right = 0;
+                left = 1;
+            } else if (y > 5) {
+                left = 0;
+                right = 1;
+                    } else {
+                        right = 0;
+                        left = 0;
+                    }
+        }
 
     function loop() {
         draw();
