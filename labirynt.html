@@ -38,6 +38,7 @@
     var right = 0;
     var down = 0;
     var up = 0;
+    var blocked = 0;
 
         function permission () {
             if ( typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function" ) {
@@ -143,8 +144,10 @@
                                     if (ballX > brick.x && ballX < brick.x + blockWidth && ballY > brick.y && ballY < brick.y + blockHeight) {
                                         verticalSpeed = 0;
                                             //brick.status = 0;
+                                            blocked = 1;
                                             console.log("dziazla");
                                         } else {
+                                                blocked = 0;
                                         }
                             }
                     }
@@ -167,9 +170,13 @@
                     if(ballY = ballY - 6 ) {
                         horizontalSpeed = horizontalSpeed + ((paddleX + paddleWidth/2)-ballX) * 0.05;
                         verticalSpeed = -verticalSpeed;
-                    }
+                            blocked = 1;
+                        } else {
+                            blocked  =0;
+                        }
 
                 } else {
+                            blocked  =0;
                         //document.location.reload();
                 }
         }
@@ -187,12 +194,18 @@
                     if(ballY < 5) {
                         document.location.reload();
                     }
+                    if(blocked == 0) {
+
                         ballY += horizontalSpeed;
+                    }
                 } else if (down == 1 || 40 in keys) {
                     if(ballY < 5) {
                         document.location.reload();
                     }
+                        if(blocked == 0) {
+
                         ballY -= horizontalSpeed;
+                        }
                 }
     }
         function handleOrientation(event) {
