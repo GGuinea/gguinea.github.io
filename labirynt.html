@@ -19,11 +19,11 @@
     var ctx;
     var bricks = {}; 
     var keys = {};
-    var rowCount = 3;
+    var rowCount = 7;
     var colCount =10;
     var blockHeight = 15;
     var blockWidth; 
-    var blockPadding = 3;
+    var blockPadding = 100;
     var paddleX;
     var paddleY;
     var paddleSpeed = 5;
@@ -103,22 +103,17 @@
 }
  
     function drawBall() {
+    }
+    function drawPaddle() {
         ctx.beginPath();
-
         ctx.arc(ballX, ballY, radius, 0, 2 * Math.PI);
         ctx.fillStyle = 'black';
         ctx.fill();
         ctx.closePath();
     }
-    function drawPaddle() {
-        ctx.beginPath();
-        ctx.rect(paddleX, paddleY, paddleWidth, 6);
-        ctx.fillStyle = 'green';
-        ctx.fill();
-        ctx.closePath();
-    }
 
     function drawBricks() {
+        tmp = 0
         for (c = 0; c < colCount; c++) {
             for (r = 0; r < rowCount; r++) {
                 if (bricks[c][r].status == 1) {
@@ -127,7 +122,13 @@
                     bricks[c][r].x = brickX;
                     bricks[c][r].y = brickY;
                     ctx.beginPath();
-                    ctx.rect(brickX, brickY, blockWidth, blockHeight);
+                        if(tmp == 0) {
+
+                    ctx.rect(brickX, brickY, 2*blockWidth, blockHeight);
+                            tmp = 1;
+                            } else {
+                                tmp = 0;
+                            }
                     ctx.fillStyle = 'green';
                     ctx.fill();
                     ctx.closePath();
@@ -142,8 +143,8 @@
                         var brick = bricks[i][j];
                             if(brick.status == 1) {
                                     if (ballX > brick.x && ballX < brick.x + blockWidth && ballY > brick.y && ballY < brick.y + blockHeight) {
-                                        verticalSpeed = -verticalSpeed;
-                                            brick.status = 0;
+                                        verticalSpeed = 0;
+                                            //brick.status = 0;
                                             console.log("dziazla");
                                         } else {
                                         }
@@ -171,20 +172,20 @@
                     }
 
                 } else {
-                        document.location.reload();
+                        //document.location.reload();
                 }
         }
         if (37 in keys || left == 1) {
-            if (paddleX - paddleSpeed> 0) {
+            if (ballX- verticalSpeed> 0) {
+                ballX += verticalSpeed;
                 paddleX -= paddleSpeed;
             }
         } else if (39 in keys || right == 1) {
-            if (paddleX+ paddleWidth+ paddleSpeed< canvas.width) {
+            if (ballY+ radius+ verticalSpeed< canvas.width) {
+                ballX -= verticalSpeed;
                 paddleX+= paddleSpeed;
             }
         } 
-    ballX += horizontalSpeed;
-    ballY += verticalSpeed;
     }
         function handleOrientation(event) {
             var x = event.beta;
