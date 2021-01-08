@@ -206,6 +206,12 @@
                         right = 0;
                         left = 0;
                     }
+                if(x < -10) {
+                        ballY += horizontalSpeed;
+                    } else if (x > 20) {
+                        ballY -= horizontalSpeed;
+
+                    }
         }
 
     function loop() {
