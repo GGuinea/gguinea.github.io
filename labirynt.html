@@ -146,6 +146,7 @@
                                             //brick.status = 0;
                                             blocked = 1;
                                             console.log("dziazla");
+                                            return;
                                         } else {
                                                 blocked = 0;
                                         }
@@ -168,11 +169,8 @@
     } else if (ballY + verticalSpeed > paddleY - radius) {
             if(ballX + radius > paddleX && ballX - radius < paddleX + paddleWidth) {
                     if(ballY = ballY - 6 ) {
-                        horizontalSpeed = horizontalSpeed + ((paddleX + paddleWidth/2)-ballX) * 0.05;
                         verticalSpeed = -verticalSpeed;
-                            blocked = 1;
                         } else {
-                            blocked  =0;
                         }
 
                 } else {
@@ -187,15 +185,14 @@
             }
         } else if (39 in keys || right == 1) {
             if (ballX+ radius+ verticalSpeed< canvas.width) {
+
                 ballX -= verticalSpeed;
-                paddleX+= paddleSpeed;
             }
             }  else if (up == 1 || 38 in keys) {
                     if(ballY < 5) {
                         document.location.reload();
                     }
                     if(blocked == 0) {
-
                         ballY += horizontalSpeed;
                     }
                 } else if (down == 1 || 40 in keys) {
@@ -203,7 +200,6 @@
                         document.location.reload();
                     }
                         if(blocked == 0) {
-
                         ballY -= horizontalSpeed;
                         }
                 }
