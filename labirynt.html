@@ -33,8 +33,10 @@
     var verticalSpeed;
     var horizontalSpeed;
     var radius;
-    var left = 0
-    var right = 1
+    var left = 0;
+    var right = 1;
+    var down = 0;
+    var up = 1;
 
       function init() {
         canvas = document.getElementById('mycanvas'); 
@@ -185,7 +187,11 @@
                 ballX -= verticalSpeed;
                 paddleX+= paddleSpeed;
             }
-        } 
+            }  else if (up == 1) {
+                        ballY += horizontalSpeed;
+                } else if (down == 1) {
+                        ballY -= horizontalSpeed;
+                }
     }
         function handleOrientation(event) {
             var x = event.beta;
@@ -207,11 +213,17 @@
                         left = 0;
                     }
                 if(x < -10) {
-                        ballY += horizontalSpeed;
+                            up = 1;
+                            down = 0;
                     } else if (x > 20) {
-                        ballY -= horizontalSpeed;
+                            up = 0;
+                            down = 1;
 
-                    }
+                        } else {
+                            up = 0;
+                            down = 0;
+
+                        }
         }
 
     function loop() {
