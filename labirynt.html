@@ -206,7 +206,11 @@
                 }
     }
         function updateOrientation(event) {
-                whichOrientation = event.orientation;
+                if(!window.innerWidth > window.innerHeight) {
+                    whichOrientation = "landscape";
+                    } else {
+                        whichOrientation = "not";
+                    }
 
         }
         function handleOrientation(event) {
@@ -284,6 +288,7 @@
     }
 
 init();
+updateOrientation();
 loop();
 
 </script>
