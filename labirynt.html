@@ -53,12 +53,6 @@
             }
         }
       function init() {
-        canvas = document.getElementById('mycanvas'); 
-              if(confirm("Nadaj uprawnienia")) {
-                    permission();
-                  } else {
-                    permission();
-                  }
         //if ( location.protocol !== "https:" ) {
         //        location.href = "https:" + window.location.href.substring( window.location.protocol.length );
         //    }
@@ -189,6 +183,9 @@
                 paddleX+= paddleSpeed;
             }
             }  else if (up == 1) {
+                    if(ballY > 5) {
+                        document.location.reload();
+                    }
                         ballY += horizontalSpeed;
                 } else if (down == 1) {
                         ballY -= horizontalSpeed;
