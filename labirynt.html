@@ -16,6 +16,10 @@
     <canvas id="mycanvas" width="90%" height="90%"> </canvas>
 <script>
     var canvas;
+    canvas = document.getElementById('mycanvas'); 
+    canvas.width = window.innerWidth;
+    canvas.height= window.height;
+
     var canvasWidth;
     var ctx;
     var bricks = {}; 
@@ -31,6 +35,10 @@
     var paddleWidth;
     var ballX;
     var ballY;
+    ballX = canvas.width / 10;
+    ballY = (canvas.height) + 20;
+
+        console.log(canvas.height);
     var verticalSpeed;
     var horizontalSpeed;
     var radius;
@@ -41,6 +49,7 @@
     var blocked = 0;
     var mql;
     var whichOrientation;
+    var maze = []
 
         function permission () {
             if ( typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function" ) {
@@ -61,19 +70,37 @@
                             mql = window.matchMedia("(orientation: portrait)");
             }
         }
-      function init() {
-        canvas = document.getElementById('mycanvas'); 
-        //if ( location.protocol !== "https:" ) {
-        //        location.href = "https:" + window.location.href.substring( window.location.protocol.length );
-        //    }
+
+        function genMaze() {
+                maze = [];
+    maze.push({
+        x: 0,
+        y: canvas.height / 2,
+        width: (canvas.width*2)/3,
+        height: 12,
+    });
+
+    maze.push({
+        x: canvas.width/2,
+        y: (canvas.height) / 3,
+        width: canvas.width,
+        height: 12,
+    });
+
+    maze.push({
+        x: canvas.width/2,
+        y: (canvas.height*2) / 3,
+        width: canvas.width,
+        height: 12,
+    });
 
 
-        for (c = 0; c < colCount; c++) {
-            bricks[c] = {};
-            for (r = 0; r < rowCount; r++) {
-                bricks[c][r] = { x: 0, y: 0, status: 1 };
-            }
+
         }
+      function init() {
+        //genMaze();
+
+    // tutaj dac genereowanie
     window.addEventListener('keydown', function(e) {
         keys[e.keyCode] = true;
         e.preventDefault();
@@ -87,16 +114,6 @@
           window.addEventListener('resize', resizeGame, false);
           window.addEventListener('orientationchange', resizeGame, false);
           resizeGame()
-        paddleX = (canvas.width/2)-40
-        paddleY = (canvas.height - canvas.height/4)
-        paddleWidth = 80;
-        ballX = canvas.width/2;
-        ballY = (canvas.height - canvas.height/4) - 10;
-        horizontalSpeed = 1;
-        verticalSpeed = horizontalSpeed * -1;
-        radius = 7;
-        console.log("fasdfsadf");
-        blockWidth= (canvas.width/colCount)-5;
         }
       }
  
@@ -107,66 +124,27 @@
     var gameCanvas = document.getElementById('mycanvas');
     gameCanvas.width = newWidth;
     gameCanvas.height = newHeight;
-}
- 
-    function drawBall() {
+    genMaze();
     }
-    function drawPaddle() {
-        ctx.beginPath();
-        ctx.arc(ballX, ballY, radius, 0, 2 * Math.PI);
-        ctx.fillStyle = 'black';
-        ctx.fill();
-        ctx.closePath();
-    }
-
-    function drawBricks() {
-        tmp = 0
-        for (c = 0; c < colCount; c++) {
-            for (r = 0; r < rowCount; r++) {
-                if (bricks[c][r].status == 1) {
-                    var brickX = (c * (blockWidth+ blockPadding)) + 10;
-                    var brickY = (r * (blockHeight+ blockPadding)) + 10;
-                    bricks[c][r].x = brickX;
-                    bricks[c][r].y = brickY;
-                    ctx.beginPath();
-                        if(tmp == 0) {
-
-                    ctx.rect(brickX, brickY, 2*blockWidth, blockHeight);
-                            tmp = 1;
-                            } else {
-                                tmp = 0;
-                            }
-                    ctx.fillStyle = 'green';
-                    ctx.fill();
-                    ctx.closePath();
+        function drawMaze() {
+                for (x of maze) {
+                    ctx.fillStyle = "green";
+                    ctx.fillRect(x.x, x.y, x.width, x.height);
                 }
-            }
+
         }
-    }
-
-    function collisionDetection() {
-            for(i = 0; i < colCount; i++) {
-                    for(j = 0; j < rowCount; j++) {
-                        var brick = bricks[i][j];
-                            if(brick.status == 1) {
-                                    if (ballX > brick.x && ballX < brick.x + blockWidth && ballY > brick.y && ballY < brick.y + blockHeight) {
-                                        verticalSpeed = 0;
-                                            //brick.status = 0;
-                                            console.log("dziazla");
-                                            return;
-                                        } else {
-                                        }
-                            }
-                    }
-            }
-    }
-
+        function drawBall() {
+                ctx.beginPath();
+                ctx.arc(ballX, ballY, 10,0,2*Math.PI);
+                ctx.fillStyle = "black";
+                ctx.fill();
+                ctx.stroke();
+        }
+ 
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        drawBricks();
-        drawPaddle();
+        drawMaze();
         drawBall();
-        collisionDetection()
     if (ballX + horizontalSpeed > canvas.width - radius|| ballX + horizontalSpeed < radius) {
         horizontalSpeed = -horizontalSpeed;
     }
