@@ -37,7 +37,7 @@
     ballY = (canvas.height) + 20;
 
         console.log(canvas.height);
-    var verticalSpeed = 2;
+    var verticalSpeed = 10;
     var radius;
     var left = 0;
     var right = 0;
@@ -145,21 +145,27 @@
                 ctx.fill();
                 ctx.stroke();
         }
+
+        function collisitonWithFinish() {
+                if(ballX < finish[0].x + 50 && ballX > finish[0].x - 50 && 
+                        ballY < finish[0].y + 150 && ballY > finish[0].y - 50) {
+                            console.log("end");
+                            alert("Wygrales");
+                            document.location.reload();
+                        }
+        }
  
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        collisitonWithFinish();
         drawMaze();
         drawBall();
-        console.log(ballX);
-        console.log(ballY);
         if (37 in keys || left == 1) {
             if (ballX- verticalSpeed> 0) {
                 ballX += verticalSpeed;
             }
         } else if (39 in keys || right == 1) {
-            if (ballX+ verticalSpeed< canvas.width) {
                 ballX -= verticalSpeed;
-            }
             }  else if (up == 1 || 38 in keys) {
                         ballY += verticalSpeed;
                 } else if (down == 1 || 40 in keys) {
