@@ -75,21 +75,21 @@
         x: 0,
         y: canvas.height / 2,
         width: (canvas.width*2)/3,
-        height: 12,
+        height: 22,
     });
 
     maze.push({
         x: canvas.width/2,
         y: (canvas.height) / 3,
         width: canvas.width,
-        height: 12,
+        height: 22,
     });
 
     maze.push({
         x: canvas.width/2,
         y: (canvas.height*2) / 3,
         width: canvas.width,
-        height: 12,
+        height: 22,
     });
 
 
@@ -148,16 +148,38 @@
 
         function collisitonWithFinish() {
                 if(ballX < finish[0].x + 50 && ballX > finish[0].x - 50 && 
-                        ballY < finish[0].y + 150 && ballY > finish[0].y - 50) {
+                        ballY < finish[0].y + 150 && ballY > finish[0].y) {
                             console.log("end");
                             alert("Wygrales");
                             document.location.reload();
                         }
         }
+
+        function mazeCollision() {
+                for(x of maze) {
+                        if (x.y < ballY && x.y > ballY - 10 
+                                && x.x < ballX  && x.x + x.width > ballX) {
+                                    ballY += verticalSpeed;//x.y + 10;
+                                }
+                        if (x.y > ballY && x.y < ballY + 10 
+                                && x.x < ballX  && x.x + x.width > ballX) {
+                                    ballY -= verticalSpeed;//bx.y - 10;
+                                }
+                        if (x.x > ballX && x.x < ballY + 10 
+                                && x.y < ballY  && x.y + x.height > ballY) {
+                                    ballX -= verticalSpeed;//x.x - 10;
+                                }
+                        if (x.x < ballX && x.x > ballY - 10 
+                                && x.y < ballY  && x.y + x.height > ballY) {
+                                    ballX += verticalSpeed;//x.x + 10;
+                                }
+                }
+        }
  
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         collisitonWithFinish();
+        mazeCollision();
         drawMaze();
         drawBall();
         if (37 in keys || left == 1) {
