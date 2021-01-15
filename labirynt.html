@@ -92,14 +92,14 @@
         height: 22,
     });
     maze.push({
-        x: 0,
+        x: 10,
         y: 0,
         width: canvas.width,
         height: 22,
     });
 
     maze.push({
-        x: 0,
+        x: 20,
         y: canvas.height -10,
         width: canvas.width,
         height: 22,
@@ -185,19 +185,19 @@
                 for(x of maze) {
                         if (x.y < ballY && x.y > ballY - 10 
                                 && x.x < ballX  && x.x + x.width > ballX) {
-                                    ballY += verticalSpeed;//x.y + 10;
+                                    ballY += verticalSpeed;;
                                 }
                         if (x.y > ballY && x.y < ballY + 10 
                                 && x.x < ballX  && x.x + x.width > ballX) {
-                                    ballY -= verticalSpeed;//bx.y - 10;
+                                    ballY -= verticalSpeed;;
                                 }
                         if (x.x > ballX && x.x < ballY + 10 
                                 && x.y < ballY  && x.y + x.height > ballY) {
-                                    ballX -= verticalSpeed;//x.x - 10;
+                                    ballX -= verticalSpeed;;
                                 }
                         if (x.x < ballX && x.x > ballY - 10 
                                 && x.y < ballY  && x.y + x.height > ballY) {
-                                    ballX += verticalSpeed;//x.x + 10;
+                                    ballX += verticalSpeed;;
                                 }
                 }
         }
