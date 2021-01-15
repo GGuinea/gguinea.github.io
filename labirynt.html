@@ -31,16 +31,13 @@
     var blockPadding = 100;
     var paddleX;
     var paddleY;
-    var paddleSpeed = 5;
-    var paddleWidth;
     var ballX;
     var ballY;
     ballX = canvas.width / 10;
     ballY = (canvas.height) + 20;
 
         console.log(canvas.height);
-    var verticalSpeed;
-    var horizontalSpeed;
+    var verticalSpeed = 2;
     var radius;
     var left = 0;
     var right = 0;
@@ -50,6 +47,7 @@
     var mql;
     var whichOrientation;
     var maze = []
+    var finish = []
 
         function permission () {
             if ( typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function" ) {
@@ -95,12 +93,15 @@
     });
 
 
+    finish.push({
+        x: canvas.width - 20,
+        y: ((canvas.height*2) / 3) + 29,
+        height: canvas.width/5,
+        width: 60,
+    });
 
         }
       function init() {
-        //genMaze();
-
-    // tutaj dac genereowanie
     window.addEventListener('keydown', function(e) {
         keys[e.keyCode] = true;
         e.preventDefault();
@@ -131,6 +132,10 @@
                     ctx.fillStyle = "green";
                     ctx.fillRect(x.x, x.y, x.width, x.height);
                 }
+                for (x of finish) {
+                    ctx.fillStyle = "blue";
+                    ctx.fillRect(x.x, x.y, x.width, x.height);
+                }
 
         }
         function drawBall() {
@@ -145,42 +150,26 @@
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawMaze();
         drawBall();
-    if (ballX + horizontalSpeed > canvas.width - radius|| ballX + horizontalSpeed < radius) {
-        horizontalSpeed = -horizontalSpeed;
-    }
-    if (ballY + verticalSpeed< radius) {
-        verticalSpeed = -verticalSpeed;
-    } else if (ballY + verticalSpeed > paddleY - radius) {
-            if(ballX + radius > paddleX && ballX - radius < paddleX + paddleWidth) {
-                    if(ballY = ballY - 6 ) {
-                        verticalSpeed = -verticalSpeed;
-                        } else {
-                        }
-
-                } else {
-                        //document.location.reload();
-                }
-        }
+        console.log(ballX);
+        console.log(ballY);
         if (37 in keys || left == 1) {
             if (ballX- verticalSpeed> 0) {
                 ballX += verticalSpeed;
-                paddleX -= paddleSpeed;
             }
         } else if (39 in keys || right == 1) {
             if (ballX+ radius+ verticalSpeed< canvas.width) {
-
                 ballX -= verticalSpeed;
             }
             }  else if (up == 1 || 38 in keys) {
                     if(ballY < 5) {
                         document.location.reload();
                     }
-                        ballY += horizontalSpeed;
+                        ballY += verticalSpeed;
                 } else if (down == 1 || 40 in keys) {
                     if(ballY < 5) {
                         document.location.reload();
                     }
-                        ballY -= horizontalSpeed;
+                        ballY -= verticalSpeed;
                 }
     }
         function updateOrientation(event) {
