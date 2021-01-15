@@ -34,7 +34,7 @@
     var ballX;
     var ballY;
     ballX = canvas.width / 10;
-    ballY = (canvas.height) + 20;
+    ballY = (canvas.height) + 50;
 
         console.log(canvas.height);
     var verticalSpeed = 10;
@@ -91,7 +91,33 @@
         width: canvas.width,
         height: 22,
     });
+    maze.push({
+        x: 0,
+        y: 0,
+        width: canvas.width,
+        height: 22,
+    });
 
+    maze.push({
+        x: 0,
+        y: canvas.height -10,
+        width: canvas.width,
+        height: 22,
+    });
+
+    maze.push({
+        x: 0,
+        y: 0,
+        width: 22,
+        height: canvas.width,
+    });
+
+    maze.push({
+        x: canvas.width-10,
+        y: 0,
+        width: 22,
+        height: canvas.width,
+    });
 
     finish.push({
         x: canvas.width - 20,
